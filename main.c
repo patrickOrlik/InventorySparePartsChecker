@@ -8,17 +8,17 @@ int correctpart = 0;
 int i;
 int PARTS_COUNT;
 char answer[50];
+// beskriver alle genstande på lager
 char Inventory[][MAX_LENGTH] = {
     "PLC module",
     "Servo motor",
     "hydraulic pump",
 };
+// beskriver special queries
 char Queries[2][50] = {"Do you actually have any parts?",
                        "Is there anything in stock at all?"};
-int PARTS_COUNT =
-    sizeof(Inventory) /
-    sizeof(Inventory[0]); // dividere total antal bytes med
-                          // byte størrelsen på en genstand i arrayet
+// dividere totalstørrelsen af alle hele arrayet med byte størrelse pr genstand
+int PARTS_COUNT = sizeof(Inventory) / sizeof(Inventory[0]);
 
 int main(void) {
 
@@ -29,11 +29,12 @@ int main(void) {
     fgets(answer, 50, stdin);
     answer[strcspn(answer, "\n")] =
         '\0'; // replacer \n(enter) med \0(string end)
-    // Tjekker hvis Inputtet matcher nogle af vores special queries
+    // Tjekker hvis bruger Inputtet matcher nogle af vores special queries
     if (strcmp(Queries[0], answer) == 0 || strcmp(Queries[1], answer) == 0) {
       printf("Yes we have %d parts in stock:\n", PARTS_COUNT);
-      for (size_t i = 0; i < PARTS_COUNT; ++i) {
+      while (i < PARTS_COUNT) {
         puts(Inventory[i]);
+        ++i;
       }
       continue; // hvis inputtet matcher skipper den resten af loopet og går
                 // tilbage til start
@@ -42,7 +43,7 @@ int main(void) {
     int i = 0;
     while (i != PARTS_COUNT) {
       if (strcmp(Inventory[i], answer) == 0) {
-        printf("i have got %s", Inventory[i]);
+        printf("i have got a %s", Inventory[i]);
         printf(" here for you!");
         return 0;
       }
