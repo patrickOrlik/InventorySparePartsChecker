@@ -2,21 +2,28 @@
 #include "string.h"
 #include <complex.h>
 // Definere alle Arrays og variabler
-#define PARTS_COUNT 3
 #define MAX_LENGTH 15
+
 int correctpart = 0;
 int i;
-
+int PARTS_COUNT;
 char answer[50];
-char Inventory[PARTS_COUNT][MAX_LENGTH] = {"PLC module", "Servo motor",
-                                           "hydraulic pump"};
+char Inventory[][MAX_LENGTH] = {
+    "PLC module",
+    "Servo motor",
+    "hydraulic pump",
+};
 char Queries[2][50] = {"Do you actually have any parts?",
                        "Is there anything in stock at all?"};
+int PARTS_COUNT =
+    sizeof(Inventory) /
+    sizeof(Inventory[0]); // dividere total antal bytes med
+                          // byte størrelsen på en genstand i arrayet
 
 int main(void) {
 
   printf("Hello welcome to the sparepart inventory!\n");
-  while (0) {
+  while (1) {
     // får user input
     puts("which part do you need?");
     fgets(answer, 50, stdin);
@@ -24,7 +31,7 @@ int main(void) {
         '\0'; // replacer \n(enter) med \0(string end)
     // Tjekker hvis Inputtet matcher nogle af vores special queries
     if (strcmp(Queries[0], answer) == 0 || strcmp(Queries[1], answer) == 0) {
-      printf("Yes we have %d parts in stock", PARTS_COUNT);
+      printf("Yes we have %d parts in stock:\n", PARTS_COUNT);
       for (size_t i = 0; i < PARTS_COUNT; ++i) {
         puts(Inventory[i]);
       }
@@ -42,6 +49,6 @@ int main(void) {
 
       ++i;
     }
-    printf("im afraid we dont have any %s in inventory", answer);
+    printf("im afraid we dont have any %s in inventory: \n", answer);
   }
 }
